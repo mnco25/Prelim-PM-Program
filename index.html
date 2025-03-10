@@ -4,402 +4,104 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project Management Review Exam (Former Prelim)</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <style>
-      :root {
-        --primary-color: #4361ee;
-        --primary-light: #4cc9f0;
-        --secondary-color: #7209b7;
-        --correct-color: #06d6a0;
-        --incorrect-color: #ef476f;
-        --text-color: #2b2d42;
-        --text-light: #8d99ae;
-        --bg-color: #f8f9fa;
-        --card-bg: #ffffff;
-        --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        --border-radius: 12px;
-      }
-
-      .dark-mode {
-        --primary-color: #6c63ff;
-        --primary-light: #3a86ff;
-        --secondary-color: #8338ec;
-        --correct-color: #38b000;
-        --incorrect-color: #ff006e;
-        --text-color: #f1faee;
-        --text-light: #a8dadc;
-        --bg-color: #121212;
-        --card-bg: #1f1f1f;
-        --shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-      }
-
-      * {
-        box-sizing: border-box;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-
       body {
-        font-family: "Poppins", sans-serif;
-        background-color: var(--bg-color);
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f9;
         margin: 0;
         padding: 0;
-        color: var(--text-color);
-        line-height: 1.6;
       }
-
-      .theme-toggle {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: var(--primary-color);
-        border: none;
-        color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: var(--shadow);
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        transition: transform 0.2s, background-color 0.3s;
-      }
-
-      .theme-toggle:hover {
-        transform: scale(1.1);
-      }
-
       .quiz-container {
         max-width: 900px;
         margin: 20px auto;
-        padding: 30px;
-        background-color: var(--card-bg);
-        box-shadow: var(--shadow);
-        border-radius: var(--border-radius);
-        position: relative;
-        overflow: hidden;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
       }
-
-      .header-container {
-        position: relative;
-        margin-bottom: 30px;
-      }
-
       h1 {
         text-align: center;
-        color: var(--primary-color);
-        margin: 0 0 10px 0;
-        font-weight: 600;
-        font-size: 32px;
+        color: #333;
+        margin-bottom: 20px;
       }
-
-      .progress-container {
-        height: 10px;
-        width: 100%;
-        background-color: var(--bg-color);
-        border-radius: 5px;
-        margin-top: 20px;
-        overflow: hidden;
-      }
-
-      .progress-bar {
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          var(--primary-light) 0%,
-          var(--primary-color) 100%
-        );
-        width: 0%;
-        transition: width 0.5s ease;
-        border-radius: 5px;
-      }
-
-      .stats {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 5px;
-        color: var(--text-light);
-        font-size: 14px;
-      }
-
       .question {
-        margin-bottom: 30px;
-        padding: 25px;
-        border-radius: var(--border-radius);
-        background-color: var(--card-bg);
-        box-shadow: var(--shadow);
-        transform: translateY(0);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .question:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-      }
-
-      .question::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 5px;
-        height: 100%;
-        background-color: var(--primary-color);
-        border-radius: var(--border-radius) 0 0 var(--border-radius);
-      }
-
-      .question.answered::before {
-        background-color: var(--correct-color);
-      }
-
-      .question.answered-incorrect::before {
-        background-color: var(--incorrect-color);
-      }
-
-      .question p {
-        margin: 0 0 15px 0;
-        font-weight: 500;
-        color: var(--text-color);
-        font-size: 18px;
-      }
-
-      .question-number {
-        display: inline-block;
-        width: 28px;
-        height: 28px;
-        background-color: var(--primary-color);
-        color: white;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 28px;
-        margin-right: 10px;
-        font-size: 14px;
-        font-weight: bold;
-      }
-
-      .options-container {
-        margin-top: 20px;
-      }
-
-      label {
-        display: flex;
-        align-items: center;
-        margin: 10px 0;
-        padding: 12px 15px;
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #ddd;
         border-radius: 8px;
-        background-color: var(--bg-color);
-        cursor: pointer;
-        transition: all 0.2s;
+        background-color: #fafafa;
       }
-
-      label:hover {
-        background-color: var(--primary-light);
-        color: white;
+      .question p {
+        margin: 0 0 10px 0;
+        font-weight: bold;
+        color: #2c3e50;
       }
-
+      label {
+        display: block;
+        margin: 5px 0;
+        color: #555;
+      }
       input[type="radio"] {
-        margin-right: 12px;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border: 2px solid var(--primary-color);
-        border-radius: 50%;
-        outline: none;
-        position: relative;
+        margin-right: 10px;
       }
-
-      input[type="radio"]:checked {
-        background-color: var(--primary-color);
-      }
-
-      input[type="radio"]:checked::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 8px;
-        height: 8px;
-        background-color: white;
-        border-radius: 50%;
-      }
-
-      .button-container {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-      }
-
       button {
-        padding: 12px 22px;
-        background: linear-gradient(
-          135deg,
-          var(--primary-color) 0%,
-          var(--secondary-color) 100%
-        );
+        padding: 8px 15px;
+        background-color: #3498db;
         color: white;
         border: none;
-        border-radius: 30px;
+        border-radius: 5px;
         cursor: pointer;
-        font-family: "Poppins", sans-serif;
-        font-weight: 500;
-        font-size: 16px;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        position: relative;
-        overflow: hidden;
+        transition: background-color 0.3s;
+        margin-top: 10px;
       }
-
       button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        background-color: #2980b9;
       }
-
-      button:active {
-        transform: translateY(-1px);
-      }
-
-      button::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.3s ease;
-      }
-
-      button:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-
-      button:disabled {
-        background: #cccccc;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-      }
-
       .answer {
-        margin-top: 20px;
-        padding: 15px;
-        background-color: var(--bg-color);
-        border-radius: 8px;
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #ecf0f1;
+        border-radius: 5px;
         display: none;
-        animation: fadeIn 0.5s ease;
       }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
       .answer p {
         margin: 5px 0;
         font-weight: normal;
-        color: var(--text-color);
+        color: #333;
       }
-
       .correct {
-        color: var(--correct-color);
-        font-weight: 600;
+        color: #27ae60;
+        font-weight: bold;
       }
-
       .incorrect {
-        color: var(--incorrect-color);
-        font-weight: 600;
+        color: #c0392b;
+        font-weight: bold;
       }
-
-      .explanation-header {
-        font-weight: 500;
-        color: var(--primary-color);
-        margin-bottom: 5px;
-      }
-
       footer {
         text-align: center;
-        margin-top: 40px;
-        padding: 20px 0;
-        color: var(--text-light);
+        margin-top: 30px;
         font-size: 0.9em;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        color: #7f8c8d;
       }
-
-      .completed-message {
-        text-align: center;
-        padding: 30px;
-        background-color: var(--bg-color);
-        border-radius: 8px;
-        margin-top: 20px;
-        display: none;
-      }
-
-      .completed-message h2 {
-        color: var(--primary-color);
-      }
-
-      @media (max-width: 768px) {
+      @media (max-width: 600px) {
         .quiz-container {
           margin: 10px;
-          padding: 20px;
-        }
-
-        .question {
           padding: 15px;
         }
-
-        h1 {
-          font-size: 24px;
+        .question {
+          padding: 10px;
         }
-
-        .button-container {
-          justify-content: center;
+        button {
+          width: 100%;
         }
       }
     </style>
   </head>
   <body>
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-
     <div class="quiz-container">
-      <div class="header-container">
-        <h1>Project Management Review Quiz</h1>
-        <div class="progress-container">
-          <div class="progress-bar" id="progress"></div>
-        </div>
-        <div class="stats">
-          <span id="questionCount">0 of 32 questions answered</span>
-          <span id="scoreDisplay">Score: 0%</span>
-        </div>
-      </div>
-
+      <h1>Project Management Review Quiz</h1>
       <div id="quiz"></div>
-
-      <div class="completed-message" id="completedMessage">
-        <h2>Quiz Completed!</h2>
-        <p>Thank you for completing the Project Management Review Quiz.</p>
-        <p id="finalScore"></p>
-      </div>
-
-      <footer>Created by Marc • <span id="currentYear"></span></footer>
+      <footer>Created by Marc</footer>
     </div>
 
     <script>
@@ -432,18 +134,18 @@
           text: "3. RAD is an adaptive life cycle model which is used to produce systems quickly without sacrificing quality.",
           type: "multiple-choice",
           choices: ["True", "False"],
-          correctAnswer: 0, // 'True'
+          correctAnswer: 1, // 'False'
           explanation:
-            "Rapid Application Development (RAD) focuses on quick development and iteration, maintaining quality through adaptive processes.",
+            "While RAD focuses on quick development, it may compromise quality due to its accelerated timeline and emphasis on speed.",
         },
         {
           id: "q4",
           text: "4. The nature of IT projects is different from the nature of projects in many other industries because they are very __________.",
           type: "multiple-choice",
           choices: ["expensive", "technical", "diverse", "challenging"],
-          correctAnswer: 1, // 'technical'
+          correctAnswer: 2, // 'diverse'
           explanation:
-            "IT projects are uniquely technical, requiring specialized knowledge of software, hardware, and systems integration.",
+            "IT projects are uniquely diverse, spanning various technologies, industries, and applications.",
         },
         {
           id: "q5",
@@ -718,12 +420,12 @@
           text: "29. This should occur after each phase to evaluate the project’s progress, likely success, and continued compatibility with organizational goals.",
           type: "multiple-choice",
           choices: [
-            "management reviews",
+            "management views",
             "deliverables",
             "output",
             "requirements management",
           ],
-          correctAnswer: 0, // 'management reviews'
+          correctAnswer: 0, // 'management views'
           explanation:
             "Management reviews assess progress and alignment at phase ends.",
         },
@@ -762,39 +464,15 @@
       ];
 
       const quizDiv = document.getElementById("quiz");
-      const progressBar = document.getElementById("progress");
-      const questionCountSpan = document.getElementById("questionCount");
-      const scoreDisplaySpan = document.getElementById("scoreDisplay");
-      const completedMessage = document.getElementById("completedMessage");
-      const finalScoreP = document.getElementById("finalScore");
 
-      let answeredQuestions = 0;
-      let correctAnswers = 0;
-
-      // Set current year in footer
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
-
-      questions.forEach((question, index) => {
+      questions.forEach((question) => {
         const questionDiv = document.createElement("div");
         questionDiv.className = "question";
         questionDiv.id = question.id;
 
         const p = document.createElement("p");
-        const questionNumber = document.createElement("span");
-        questionNumber.className = "question-number";
-        questionNumber.textContent = index + 1;
-
-        p.appendChild(questionNumber);
-        p.appendChild(
-          document.createTextNode(
-            " " + question.text.substring(question.text.indexOf(".") + 2)
-          )
-        );
+        p.textContent = question.text;
         questionDiv.appendChild(p);
-
-        const optionsContainer = document.createElement("div");
-        optionsContainer.className = "options-container";
 
         if (question.type === "multiple-choice") {
           question.choices.forEach((choice, index) => {
@@ -805,13 +483,9 @@
             radio.value = index;
             label.appendChild(radio);
             label.appendChild(document.createTextNode(choice));
-            optionsContainer.appendChild(label);
+            questionDiv.appendChild(label);
+            questionDiv.appendChild(document.createElement("br"));
           });
-
-          questionDiv.appendChild(optionsContainer);
-
-          const buttonContainer = document.createElement("div");
-          buttonContainer.className = "button-container";
 
           const button = document.createElement("button");
           button.textContent = "Check Answer";
@@ -822,22 +496,13 @@
               question.explanation,
               question.choices
             );
-
-          buttonContainer.appendChild(button);
-          questionDiv.appendChild(buttonContainer);
+          questionDiv.appendChild(button);
         } else {
-          questionDiv.appendChild(optionsContainer);
-
-          const buttonContainer = document.createElement("div");
-          buttonContainer.className = "button-container";
-
           const button = document.createElement("button");
           button.textContent = "Show Sample Answer";
           button.onclick = () =>
             showSampleAnswer(question.id, question.sampleAnswer);
-
-          buttonContainer.appendChild(button);
-          questionDiv.appendChild(buttonContainer);
+          questionDiv.appendChild(button);
         }
 
         const answerDiv = document.createElement("div");
@@ -853,7 +518,6 @@
           `input[name="${questionId}"]:checked`
         );
         const answerDiv = question.querySelector(".answer");
-        const button = question.querySelector("button");
 
         if (!selected) {
           alert("Please select an answer.");
@@ -865,96 +529,31 @@
         const selectedChoice = choices[selectedIndex];
         const correctChoice = choices[correctIndex];
 
-        if (isCorrect) {
-          question.classList.add("answered");
-          correctAnswers++;
-        } else {
-          question.classList.add("answered-incorrect");
-        }
-
-        answerDiv.innerHTML = `
-          <p>You selected: <span class="${
-            isCorrect ? "correct" : "incorrect"
-          }">${selectedChoice}</span> (${
+        answerDiv.innerHTML = `<p>You selected: <span class="${
           isCorrect ? "correct" : "incorrect"
-        })</p>
-          ${
-            !isCorrect
-              ? `<p>The correct answer is: <span class="correct">${correctChoice}</span></p>`
-              : ""
-          }
-          <p class="explanation-header">Explanation:</p>
-          <p>${explanation}</p>
-        `;
-
+        }">${selectedChoice}</span> (${
+          isCorrect ? "correct" : "incorrect"
+        })</p>`;
+        if (!isCorrect) {
+          answerDiv.innerHTML += `<p>The correct answer is: <span class="correct">${correctChoice}</span></p>`;
+        }
+        answerDiv.innerHTML += `<p>Explanation: ${explanation}</p>`;
         answerDiv.style.display = "block";
 
         // Disable radio buttons after checking
         question
           .querySelectorAll('input[type="radio"]')
           .forEach((radio) => (radio.disabled = true));
-        button.disabled = true;
-
-        // Update progress only if first time answering
-        if (!question.classList.contains("counted")) {
-          answeredQuestions++;
-          updateProgress();
-          question.classList.add("counted");
-        }
+        question.querySelector("button").disabled = true;
       }
 
       function showSampleAnswer(questionId, sampleAnswer) {
         const question = document.getElementById(questionId);
         const answerDiv = question.querySelector(".answer");
-
-        answerDiv.innerHTML = `
-          <p class="explanation-header">Sample Answer:</p>
-          <p>${sampleAnswer}</p>
-        `;
-
+        answerDiv.innerHTML = `<p>Sample Answer: ${sampleAnswer}</p>`;
         answerDiv.style.display = "block";
         question.querySelector("button").disabled = true;
-
-        // Update progress only if first time viewing
-        if (!question.classList.contains("counted")) {
-          answeredQuestions++;
-          question.classList.add("answered");
-          question.classList.add("counted");
-          updateProgress();
-        }
       }
-
-      function updateProgress() {
-        const totalQuestions = questions.length;
-        const progress = (answeredQuestions / totalQuestions) * 100;
-
-        progressBar.style.width = `${progress}%`;
-        questionCountSpan.textContent = `${answeredQuestions} of ${totalQuestions} questions answered`;
-
-        const score =
-          correctAnswers > 0
-            ? Math.round((correctAnswers / answeredQuestions) * 100)
-            : 0;
-        scoreDisplaySpan.textContent = `Score: ${score}%`;
-
-        if (answeredQuestions === totalQuestions) {
-          finalScoreP.textContent = `Your final score: ${score}%`;
-          completedMessage.style.display = "block";
-          completedMessage.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-
-      // Theme Toggle
-      const themeToggle = document.getElementById("themeToggle");
-      themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        themeToggle.textContent = document.body.classList.contains("dark-mode")
-          ? "☀️"
-          : "🌙";
-      });
-
-      // Initialize progress
-      updateProgress();
     </script>
   </body>
 </html>
