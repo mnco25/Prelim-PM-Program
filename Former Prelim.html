@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Management Review Exam (Former Prelim)</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+      .quiz-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .question {
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fafafa;
+      }
+      .question p {
+        margin: 0 0 10px 0;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+      label {
+        display: block;
+        margin: 5px 0;
+        color: #555;
+      }
+      input[type="radio"] {
+        margin-right: 10px;
+      }
+      button {
+        padding: 8px 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      .answer {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #ecf0f1;
+        border-radius: 5px;
+        display: none;
+      }
+      .answer p {
+        margin: 5px 0;
+        font-weight: normal;
+        color: #333;
+      }
+      .correct {
+        color: #27ae60;
+        font-weight: bold;
+      }
+      .incorrect {
+        color: #c0392b;
+        font-weight: bold;
+      }
+      footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #7f8c8d;
+      }
+      @media (max-width: 600px) {
+        .quiz-container {
+          margin: 10px;
+          padding: 15px;
+        }
+        .question {
+          padding: 10px;
+        }
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <h1>Project Management Review Quiz</h1>
+      <div id="quiz"></div>
+      <footer>Created by Marc</footer>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          id: "q1",
+          text: "1. This field includes the top skills, employers look for in new college graduates.",
+          type: "multiple-choice",
+          choices: [
+            "communications",
+            "project management",
+            "financial management",
+            "customer service",
+          ],
+          correctAnswer: 1, // 'project management'
+          explanation:
+            "Project management is a top skill because it involves planning, organizing, and leading, which are critical in today’s dynamic workplaces.",
+        },
+        {
+          id: "q2",
+          text: "2. Personnel in a ____________ organizational structure often report to two or more bosses.",
+          type: "multiple-choice",
+          choices: ["functional", "project", "hybrid", "matrix"],
+          correctAnswer: 3, // 'matrix'
+          explanation:
+            "The matrix structure allows employees to report to multiple supervisors, typically a functional manager and a project manager, enhancing flexibility.",
+        },
+        {
+          id: "q3",
+          text: "3. RAD is an adaptive life cycle model which is used to produce systems quickly without sacrificing quality.",
+          type: "multiple-choice",
+          choices: ["True", "False"],
+          correctAnswer: 0, // 'True'
+          explanation:
+            "Rapid Application Development (RAD) focuses on quick development and iteration, maintaining quality through adaptive processes.",
+        },
+        {
+          id: "q4",
+          text: "4. The nature of IT projects is different from the nature of projects in many other industries because they are very __________.",
+          type: "multiple-choice",
+          choices: ["expensive", "technical", "diverse", "challenging"],
+          correctAnswer: 1, // 'technical'
+          explanation:
+            "IT projects are uniquely technical, requiring specialized knowledge of software, hardware, and systems integration.",
+        },
+        {
+          id: "q5",
+          text: "5. These are the people involved in or affected by project activities.",
+          type: "multiple-choice",
+          choices: [
+            "stakeholders",
+            "project teams",
+            "project sponsors",
+            "users",
+          ],
+          correctAnswer: 0, // 'stakeholders'
+          explanation:
+            "Stakeholders include anyone impacted by the project, such as team members, sponsors, and end-users.",
+        },
+        {
+          id: "q6",
+          text: "6. The project sponsor acts as bosses for project managers.",
+          type: "multiple-choice",
+          choices: ["True", "False"],
+          correctAnswer: 1, // 'False'
+          explanation:
+            "Project sponsors provide funding and support but do not typically act as direct supervisors to project managers.",
+        },
+        {
+          id: "q7",
+          text: "7. Discuss the importance of top management commitment and the development of standards for successful project management.",
+          type: "open-ended",
+          sampleAnswer:
+            "Top management commitment ensures resource allocation and strategic alignment, while standards provide consistency, improving project efficiency and success rates.",
+        },
+        {
+          id: "q8",
+          text: "8. How do you define the success of an IT project?",
+          type: "open-ended",
+          sampleAnswer:
+            "Success in an IT project is defined by meeting scope, time, and cost goals, delivering a functional product, and satisfying stakeholder expectations.",
+        },
+        {
+          id: "q9",
+          text: "9. It is a product or service, such as a technical report, a training session, or hardware, produced or provided as part of a project.",
+          type: "multiple-choice",
+          choices: ["deliverable", "product", "work package", "tangible goal"],
+          correctAnswer: 0, // 'deliverable'
+          explanation:
+            "Deliverables are specific outputs produced by a project, tangible or intangible, to meet objectives.",
+        },
+        {
+          id: "q10",
+          text: "10. Project portfolio management addresses ___________ goals of an organization, while project management addresses __________ goals.",
+          type: "multiple-choice",
+          choices: [
+            "strategic, tactical",
+            "tactical, strategic",
+            "internal, external",
+            "external, internal",
+          ],
+          correctAnswer: 0, // 'strategic, tactical'
+          explanation:
+            "Portfolio management aligns projects with long-term strategic goals, while project management focuses on tactical execution.",
+        },
+        {
+          id: "q11",
+          text: "11. He/She usually provides the direction and funding for the project.",
+          type: "multiple-choice",
+          choices: [
+            "Project Sponsor",
+            "Project Manager",
+            "Program Manager",
+            "Project Coordinator",
+          ],
+          correctAnswer: 0, // 'Project Sponsor'
+          explanation:
+            "The project sponsor secures funding and sets the project’s direction, supporting the project manager.",
+        },
+        {
+          id: "q12",
+          text: "12. List down the six suggested skills for project managers. Which do you think is the most important skill among the 6 skills and WHY?",
+          type: "open-ended",
+          sampleAnswer:
+            "Skills: leadership, communication, scheduling, risk management, negotiation, critical thinking. Leadership is most important because it drives team motivation and project direction.",
+        },
+        {
+          id: "q13",
+          text: "13. These tools are also called enterprise project management software, often licensed on a per-user basis.",
+          type: "multiple-choice",
+          choices: ["high-end", "midrange", "low-end", "open source"],
+          correctAnswer: 0, // 'high-end'
+          explanation:
+            "High-end tools offer advanced features for enterprise-wide project management, typically on a per-user license.",
+        },
+        {
+          id: "q14",
+          text: "14. Which of the following terms describes a framework of the phases involved in developing information systems?",
+          type: "multiple-choice",
+          choices: [
+            "systems development life cycle",
+            "rapid application development",
+            "predictive life cycle",
+            "extreme programming",
+          ],
+          correctAnswer: 0, // 'systems development life cycle'
+          explanation:
+            "SDLC outlines phases like planning, analysis, design, implementation, and maintenance for system development.",
+        },
+        {
+          id: "q15",
+          text: "15. Which of the following is not part of the triple constraint of project management?",
+          type: "multiple-choice",
+          choices: [
+            "meeting scope goals",
+            "meeting time goals",
+            "meeting communications goals",
+            "meeting cost goals",
+          ],
+          correctAnswer: 2, // 'meeting communications goals'
+          explanation:
+            "The triple constraint includes scope, time, and cost; communication is important but not part of this trio.",
+        },
+        {
+          id: "q16",
+          text: "16. Which of the following is NOT a part of the three-sphere model for systems management?",
+          type: "multiple-choice",
+          choices: ["business", "information", "technology", "organization"],
+          correctAnswer: 1, // 'information'
+          explanation:
+            "The three-sphere model includes business, organization, and technology; information is a related but separate aspect.",
+        },
+        {
+          id: "q17",
+          text: "17. It is the application of knowledge, skills, tools, and techniques to project activities to meet project requirements.",
+          type: "multiple-choice",
+          choices: [
+            "Project management",
+            "Program management",
+            "Project portfolio management",
+            "Requirements management",
+          ],
+          correctAnswer: 0, // 'Project management'
+          explanation:
+            "Project management applies structured methods to achieve specific project goals efficiently.",
+        },
+        {
+          id: "q18",
+          text: "18. The temporary endeavor undertaken to create a unique product, service, or result.",
+          type: "multiple-choice",
+          choices: ["program", "process", "project", "portfolio"],
+          correctAnswer: 2, // 'project'
+          explanation:
+            "A project is a unique, temporary effort with a defined beginning and end to produce a specific outcome.",
+        },
+        {
+          id: "q19",
+          text: "19. Several application development projects done for the same functional group might best be managed as part of a ___________.",
+          type: "multiple-choice",
+          choices: [
+            "portfolio",
+            "program",
+            "investment",
+            "collaborative effort",
+          ],
+          correctAnswer: 1, // 'program'
+          explanation:
+            "Programs group related projects for coordinated management, often within the same functional area.",
+        },
+        {
+          id: "q20",
+          text: "20. Which of the following is NOT a potential advantage of using good project management?",
+          type: "multiple-choice",
+          choices: [
+            "shorter development times",
+            "higher worker morale",
+            "lower cost of capital",
+            "higher profit margins",
+          ],
+          correctAnswer: 2, // 'lower cost of capital'
+          explanation:
+            "Good project management improves efficiency and morale but does not directly lower the cost of capital.",
+        },
+        {
+          id: "q21",
+          text: "21. This methodology works best for object-oriented technology projects and requires strong leadership to coordinate the work.",
+          type: "multiple-choice",
+          choices: [
+            "Scrum",
+            "Rapid application development",
+            "Prototyping",
+            "Waterfall",
+          ],
+          correctAnswer: 0, // 'Scrum'
+          explanation:
+            "Scrum is agile, suited for object-oriented projects, and relies on strong leadership for coordination.",
+        },
+        {
+          id: "q22",
+          text: "22. Which of the following statements is FALSE?",
+          type: "multiple-choice",
+          choices: [
+            "An analysis project life cycle is a collection of project phases.",
+            "A product life cycle is the same as a project life cycle.",
+            "The waterfall approach is an example of a predictive life cycle model.",
+            "Agile is an example of an adaptive life cycle model.",
+          ],
+          correctAnswer: 1, // 'A product life cycle is the same as a project life cycle.'
+          explanation:
+            "Product life cycles cover the lifespan of a product, while project life cycles are specific to project execution.",
+        },
+        {
+          id: "q23",
+          text: "23. Which of the following is NOT true?",
+          type: "multiple-choice",
+          choices: [
+            "Most American companies have a project management office.",
+            "You can earn an advanced degree in project management.",
+            "Employers are looking for project management skills in new graduates.",
+            "Project management certification is required for new graduates.",
+          ],
+          correctAnswer: 3, // 'Project management certification is required for new graduates.'
+          explanation:
+            "Certification enhances employability but is not universally required for new graduates.",
+        },
+        {
+          id: "q24",
+          text: "24. A model where projects are mission-driven and component-based, using time-based cycles to meet target dates.",
+          type: "multiple-choice",
+          choices: ["adaptive", "predictive", "iterative", "RAD"],
+          correctAnswer: 2, // 'iterative'
+          explanation:
+            "Iterative models use cycles to refine components, aligning with mission goals and deadlines.",
+        },
+        {
+          id: "q25",
+          text: "25. Which of the four frames of organizations addresses how meetings are run, employee dress codes, and expected work hours?",
+          type: "multiple-choice",
+          choices: ["structural", "human resource", "political", "symbolic"],
+          correctAnswer: 3, // 'symbolic'
+          explanation:
+            "The symbolic frame focuses on culture, including norms like meeting styles and dress codes.",
+        },
+        {
+          id: "q26",
+          text: "26. What is the triple constraint? Aside from this, give other factors that can affect a project?",
+          type: "open-ended",
+          sampleAnswer:
+            "The triple constraint is scope, time, and cost. Other factors include quality, risk, resources, and stakeholder satisfaction.",
+        },
+        {
+          id: "q27",
+          text: "27. Which of the following is not an attribute of a project?",
+          type: "multiple-choice",
+          choices: [
+            "Projects are unique.",
+            "Projects are used using progressive elaboration.",
+            "Projects have a primary customer or sponsor.",
+            "Projects involve little uncertainty.",
+          ],
+          correctAnswer: 3, // 'Projects involve little uncertainty.'
+          explanation:
+            "Projects inherently involve uncertainty due to their unique nature and variables.",
+        },
+        {
+          id: "q28",
+          text: "28. The frame that focuses on roles and responsibilities, coordination and control.",
+          type: "multiple-choice",
+          choices: ["structure", "political", "symbolic", "human resource"],
+          correctAnswer: 0, // 'structure'
+          explanation:
+            "The structural frame defines organizational hierarchy, roles, and coordination mechanisms.",
+        },
+        {
+          id: "q29",
+          text: "29. This should occur after each phase to evaluate the project’s progress, likely success, and continued compatibility with organizational goals.",
+          type: "multiple-choice",
+          choices: [
+            "management reviews",
+            "deliverables",
+            "output",
+            "requirements management",
+          ],
+          correctAnswer: 0, // 'management reviews'
+          explanation:
+            "Management reviews assess progress and alignment at phase ends.",
+        },
+        {
+          id: "q30",
+          text: "30. Projects end when their objectives have been reached or the project has been terminated.",
+          type: "multiple-choice",
+          choices: ["True", "False"],
+          correctAnswer: 0, // 'True'
+          explanation:
+            "Projects conclude upon goal achievement or cancellation.",
+        },
+        {
+          id: "q31",
+          text: "31. What is the name of one of the popular certifications provided by the Project Management Institute?",
+          type: "multiple-choice",
+          choices: [
+            "Project Management Professional (PMP)",
+            "Certified Project Manager (CPM)",
+            "Project Management Expert (PME)",
+            "Project Management Mentor (PMM)",
+          ],
+          correctAnswer: 0, // 'Project Management Professional (PMP)'
+          explanation:
+            "PMP is a globally recognized certification offered by PMI.",
+        },
+        {
+          id: "q32",
+          text: "32. It is the leading agile development method.",
+          type: "multiple-choice",
+          choices: ["extreme programming", "prototyping", "Scrum", "Kanban"],
+          correctAnswer: 2, // 'Scrum'
+          explanation:
+            "Scrum is widely adopted for its iterative, team-based agile approach.",
+        },
+      ];
+
+      const quizDiv = document.getElementById("quiz");
+
+      questions.forEach((question) => {
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question";
+        questionDiv.id = question.id;
+
+        const p = document.createElement("p");
+        p.textContent = question.text;
+        questionDiv.appendChild(p);
+
+        if (question.type === "multiple-choice") {
+          question.choices.forEach((choice, index) => {
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = question.id;
+            radio.value = index;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(choice));
+            questionDiv.appendChild(label);
+            questionDiv.appendChild(document.createElement("br"));
+          });
+
+          const button = document.createElement("button");
+          button.textContent = "Check Answer";
+          button.onclick = () =>
+            checkAnswer(
+              question.id,
+              question.correctAnswer,
+              question.explanation,
+              question.choices
+            );
+          questionDiv.appendChild(button);
+        } else {
+          const button = document.createElement("button");
+          button.textContent = "Show Sample Answer";
+          button.onclick = () =>
+            showSampleAnswer(question.id, question.sampleAnswer);
+          questionDiv.appendChild(button);
+        }
+
+        const answerDiv = document.createElement("div");
+        answerDiv.className = "answer";
+        questionDiv.appendChild(answerDiv);
+
+        quizDiv.appendChild(questionDiv);
+      });
+
+      function checkAnswer(questionId, correctIndex, explanation, choices) {
+        const question = document.getElementById(questionId);
+        const selected = question.querySelector(
+          `input[name="${questionId}"]:checked`
+        );
+        const answerDiv = question.querySelector(".answer");
+
+        if (!selected) {
+          alert("Please select an answer.");
+          return;
+        }
+
+        const selectedIndex = parseInt(selected.value);
+        const isCorrect = selectedIndex === correctIndex;
+        const selectedChoice = choices[selectedIndex];
+        const correctChoice = choices[correctIndex];
+
+        answerDiv.innerHTML = `<p>You selected: <span class="${
+          isCorrect ? "correct" : "incorrect"
+        }">${selectedChoice}</span> (${
+          isCorrect ? "correct" : "incorrect"
+        })</p>`;
+        if (!isCorrect) {
+          answerDiv.innerHTML += `<p>The correct answer is: <span class="correct">${correctChoice}</span></p>`;
+        }
+        answerDiv.innerHTML += `<p>Explanation: ${explanation}</p>`;
+        answerDiv.style.display = "block";
+
+        // Disable radio buttons after checking
+        question
+          .querySelectorAll('input[type="radio"]')
+          .forEach((radio) => (radio.disabled = true));
+        question.querySelector("button").disabled = true;
+      }
+
+      function showSampleAnswer(questionId, sampleAnswer) {
+        const question = document.getElementById(questionId);
+        const answerDiv = question.querySelector(".answer");
+        answerDiv.innerHTML = `<p>Sample Answer: ${sampleAnswer}</p>`;
+        answerDiv.style.display = "block";
+        question.querySelector("button").disabled = true;
+      }
+    </script>
+  </body>
+</html>
