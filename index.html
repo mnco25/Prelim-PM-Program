@@ -374,6 +374,40 @@
           justify-content: center;
         }
       }
+
+      .category-selector {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .category-btn {
+        padding: 10px 20px;
+        background: var(--primary-light);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        transition: all 0.2s;
+      }
+
+      .category-btn:hover {
+        transform: translateY(-3px);
+      }
+
+      .category-btn.active {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
     </style>
   </head>
   <body>
@@ -381,12 +415,22 @@
 
     <div class="quiz-container">
       <div class="header-container">
-        <h1>Project Management Review Quiz</h1>
+        <h1>Project Management Review Prelim & Midterm</h1>
+
+        <div class="category-selector">
+          <button class="category-btn active" id="prelimBtn">
+            Prelim Questions
+          </button>
+          <button class="category-btn" id="midtermBtn">
+            Midterm Questions
+          </button>
+        </div>
+
         <div class="progress-container">
           <div class="progress-bar" id="progress"></div>
         </div>
         <div class="stats">
-          <span id="questionCount">0 of 32 questions answered</span>
+          <span id="questionCount">0 of 0 questions answered</span>
           <span id="scoreDisplay">Score: 0%</span>
         </div>
       </div>
@@ -403,7 +447,7 @@
     </div>
 
     <script>
-      const questions = [
+      const prelimQuestions = [
         {
           id: "q1",
           text: "1. This field includes the top skills, employers look for in new college graduates.",
@@ -761,90 +805,524 @@
         },
       ];
 
+      const midtermQuestions = [
+        {
+          id: "m1",
+          text: "1. What are the five project management process groups described in the chapter?",
+          type: "multiple-choice",
+          choices: [
+            "Starting, Organizing, Doing, Checking, Finishing",
+            "Initiating, Planning, Executing, Monitoring and Controlling, Closing",
+            "Defining, Scheduling, Implementing, Reviewing, Completing",
+            "Beginning, Managing, Performing, Evaluating, Ending",
+          ],
+          correctAnswer: 1, // 'Initiating, Planning, Executing, Monitoring and Controlling, Closing'
+          explanation:
+            "The PDF (page 79) explicitly lists the five project management process groups as initiating, planning, executing, monitoring and controlling, and closing, emphasizing their role in managing projects effectively.",
+        },
+        {
+          id: "m2",
+          text: "2. Which process group involves defining and authorizing a project?",
+          type: "multiple-choice",
+          choices: [
+            "Planning",
+            "Executing",
+            "Initiating",
+            "Monitoring and Controlling",
+          ],
+          correctAnswer: 2, // 'Initiating'
+          explanation:
+            'Page 80 states that "Initiating processes include defining and authorizing a project or project phase," making it clear that this is the purpose of the initiating process group.',
+        },
+        {
+          id: "m3",
+          text: "3. What is the primary purpose of the planning process group?",
+          type: "multiple-choice",
+          choices: [
+            "To coordinate resources and produce deliverables",
+            "To devise and maintain a workable scheme to meet organizational needs",
+            "To monitor progress and take corrective actions",
+            "To finalize project acceptance and document lessons learned",
+          ],
+          correctAnswer: 1, // 'To devise and maintain a workable scheme to meet organizational needs'
+          explanation:
+            'According to page 80, "Planning processes include devising and maintaining a workable scheme to ensure that the project addresses the organization\'s needs," highlighting its focus on creating actionable plans.',
+        },
+        {
+          id: "m4",
+          text: "4. Which process group typically requires the most resources and time?",
+          type: "multiple-choice",
+          choices: ["Initiating", "Planning", "Executing", "Closing"],
+          correctAnswer: 2, // 'Executing'
+          explanation:
+            'Page 81 notes that "Normally, the executing processes require the most resources and time, generally 50-60 percent," confirming that executing is the most resource-intensive group.',
+        },
+        {
+          id: "m5",
+          text: "5. What is a key activity in the monitoring and controlling process group?",
+          type: "multiple-choice",
+          choices: [
+            "Developing the project charter",
+            "Measuring progress and taking corrective action",
+            "Coordinating people to carry out the project plan",
+            "Assigning the project manager",
+          ],
+          correctAnswer: 1, // 'Measuring progress and taking corrective action'
+          explanation:
+            'Page 81 describes monitoring and controlling as involving "regularly measuring and monitoring progress to ensure that the project team meets the project objectives," with corrective actions taken as needed.',
+        },
+        {
+          id: "m6",
+          text: "6. What is one of the main outputs of the closing process group?",
+          type: "multiple-choice",
+          choices: [
+            "Work breakdown structure",
+            "Formal acceptance of the project",
+            "Project schedule",
+            "Stakeholder analysis",
+          ],
+          correctAnswer: 1, // 'Formal acceptance of the project'
+          explanation:
+            'Page 81 states that "Closing processes include formalizing acceptance of the project or project phase and ending it efficiently," with formal acceptance being a key outcome.',
+        },
+        {
+          id: "m7",
+          text: "7. In the JWD Consulting case study, who was the project sponsor?",
+          type: "multiple-choice",
+          choices: ["Erica Bell", "Joe Fleming", "Michael Chen", "Jessie Faue"],
+          correctAnswer: 1, // 'Joe Fleming'
+          explanation:
+            "Page 89 identifies Joe Fleming, the CEO, as the project sponsor, providing direction and approving funding for the intranet site project.",
+        },
+        {
+          id: "m8",
+          text: "8. What was the estimated budget for the JWD Consulting intranet site project?",
+          type: "multiple-choice",
+          choices: ["$100,000", "$140,000", "$200,000", "$250,000"],
+          correctAnswer: 1, // '$140,000'
+          explanation:
+            "The business case on page 92 lists the preliminary budget estimate as $140,000, based on labor and procurement costs.",
+        },
+        {
+          id: "m9",
+          text: "9. Which process group includes developing a project management plan?",
+          type: "multiple-choice",
+          choices: [
+            "Initiating",
+            "Planning",
+            "Executing",
+            "Monitoring and Controlling",
+          ],
+          correctAnswer: 1, // 'Planning'
+          explanation:
+            'Page 84\'s Table 3-1 shows that "Develop project management plan" is an activity within the planning process group under Project Integration Management.',
+        },
+        {
+          id: "m10",
+          text: "10. What tool did the JWD Consulting team use to track project progress?",
+          type: "multiple-choice",
+          choices: [
+            "Microsoft Excel",
+            "Microsoft Project",
+            "A custom-built software",
+            "A web-based dashboard",
+          ],
+          correctAnswer: 1, // 'Microsoft Project'
+          explanation:
+            "Page 105 mentions that the team used Microsoft Project to develop the Gantt chart and track progress, with updates entered via its enterprise version.",
+        },
+        {
+          id: "m11",
+          text: "11. Why is planning considered crucial for information technology projects?",
+          type: "multiple-choice",
+          choices: [
+            "It reduces the need for stakeholder involvement",
+            "It saves significant effort after implementation",
+            "It eliminates the need for execution",
+            "It ensures all projects finish under budget",
+          ],
+          correctAnswer: 1, // 'It saves significant effort after implementation'
+          explanation:
+            'Page 82 notes that "A dollar spent up front in planning is worth one hundred dollars spent after the system is implemented," emphasizing planning\'s role in reducing post-implementation effort.',
+        },
+        {
+          id: "m12",
+          text: "12. What was a key feature planned for the JWD Consulting intranet site?",
+          type: "multiple-choice",
+          choices: [
+            "A project scheduling tool",
+            "Access to project management templates",
+            "Real-time video conferencing",
+            "Employee payroll management",
+          ],
+          correctAnswer: 1, // 'Access to project management templates'
+          explanation:
+            'Page 92 lists "Access to several project management templates and tools" as a preliminary requirement for the intranet site.',
+        },
+        {
+          id: "m13",
+          text: "13. Which knowledge area is most involved in monitoring and controlling project work?",
+          type: "multiple-choice",
+          choices: [
+            "Project Scope Management",
+            "Project Integration Management",
+            "Project Time Management",
+            "Project Cost Management",
+          ],
+          correctAnswer: 1, // 'Project Integration Management'
+          explanation:
+            'Page 84\'s Table 3-1 indicates that "Monitor and control project work" falls under Project Integration Management, aligning with its integrative role.',
+        },
+        {
+          id: "m14",
+          text: "14. What was the actual completion date of the JWD Consulting project?",
+          type: "multiple-choice",
+          choices: [
+            "October 27, 2008",
+            "November 1, 2008",
+            "November 4, 2008",
+            "December 1, 2008",
+          ],
+          correctAnswer: 2, // 'November 4, 2008'
+          explanation:
+            "Page 120 states that the project finished on November 4, 2008, as planned in the project charter.",
+        },
+        {
+          id: "m15",
+          text: "15. What is the purpose of a methodology in project management?",
+          type: "multiple-choice",
+          choices: [
+            "To list project team members",
+            "To describe how things should be done",
+            "To provide a project timeline",
+            "To assign budget allocations",
+          ],
+          correctAnswer: 1, // 'To describe how things should be done'
+          explanation:
+            'Page 86 defines a methodology as describing "how things should be done," tailored to an organization\'s needs.',
+        },
+        {
+          id: "m16",
+          text: "16. In the JWD case study, what was a major activity during the executing process group?",
+          type: "multiple-choice",
+          choices: [
+            "Developing the project charter",
+            "Constructing the intranet site",
+            "Identifying stakeholders",
+            "Preparing the business case",
+          ],
+          correctAnswer: 1, // 'Constructing the intranet site'
+          explanation:
+            'Page 106 lists "Intranet site construction" as part of the executing phase, where the project\'s deliverables are produced.',
+        },
+        {
+          id: "m17",
+          text: "17. Which process group involves the most overlap with other process groups?",
+          type: "multiple-choice",
+          choices: [
+            "Initiating",
+            "Planning",
+            "Executing",
+            "Monitoring and Controlling",
+          ],
+          correctAnswer: 3, // 'Monitoring and Controlling'
+          explanation:
+            'Page 83 states that "Monitoring and controlling processes overlap all of the other project management process groups because changes can occur at any time."',
+        },
+        {
+          id: "m18",
+          text: "18. What was one of the lessons learned from the JWD Consulting project?",
+          type: "multiple-choice",
+          choices: [
+            "The need for more detailed risk management",
+            "The importance of a good kick-off meeting",
+            "The challenges of remote collaboration",
+            "The benefits of outsourcing all tasks",
+          ],
+          correctAnswer: 1, // 'The importance of a good kick-off meeting'
+          explanation:
+            'Page 116\'s lessons-learned report highlights "Having a good kick-off meeting" as instrumental to team success.',
+        },
+        {
+          id: "m19",
+          text: "19. What document did the JWD team create to justify the intranet site project?",
+          type: "multiple-choice",
+          choices: [
+            "Project charter",
+            "Business case",
+            "Scope statement",
+            "Work breakdown structure",
+          ],
+          correctAnswer: 1, // 'Business case'
+          explanation:
+            "Page 91's Table 3-3 shows the business case as a key output of initiation, justifying the project's value to JWD Consulting.",
+        },
+        {
+          id: "m20",
+          text: "20. How did the JWD team address the risk of lack of user input?",
+          type: "multiple-choice",
+          choices: [
+            "By extending the timeline",
+            "By increasing the budget",
+            "By having the CEO send an email to consultants",
+            "By outsourcing input collection",
+          ],
+          correctAnswer: 2, // 'By having the CEO send an email to consultants'
+          explanation:
+            "Page 110 explains that Joe Fleming sent an email to consultants to boost participation, addressing the low survey response rate.",
+        },
+        {
+          id: "m21",
+          text: "21. Which process group includes creating the work breakdown structure (WBS)?",
+          type: "multiple-choice",
+          choices: ["Initiating", "Planning", "Executing", "Closing"],
+          correctAnswer: 1, // 'Planning'
+          explanation:
+            "Page 102 states that the WBS was developed during the planning process group to define the project's scope and work packages.",
+        },
+        {
+          id: "m22",
+          text: "22. What was the primary business objective of the JWD intranet site project?",
+          type: "multiple-choice",
+          choices: [
+            "To train new consultants",
+            "To reduce internal costs and increase revenues",
+            "To replace the existing intranet",
+            "To improve employee benefits",
+          ],
+          correctAnswer: 1, // 'To reduce internal costs and increase revenues'
+          explanation:
+            "Page 91's business case lists reducing internal costs and increasing business as key objectives, supporting JWD's strategic goals.",
+        },
+        {
+          id: "m23",
+          text: "23. Which of the following was NOT a planned feature of the intranet site?",
+          type: "multiple-choice",
+          choices: [
+            'An "Ask the Expert" feature',
+            "Links to external sites",
+            "A project scheduling tool",
+            "Access to articles",
+          ],
+          correctAnswer: 2, // 'A project scheduling tool'
+          explanation:
+            'Page 92\'s requirements do not mention a scheduling tool, but include templates, articles, links, and an "Ask the Expert" feature.',
+        },
+        {
+          id: "m24",
+          text: "24. What was the final budget of the JWD project after adjustments?",
+          type: "multiple-choice",
+          choices: ["$130,000", "$140,000", "$150,000", "$160,000"],
+          correctAnswer: 2, // '$150,000'
+          explanation:
+            "Page 115 notes that the final budget was $150,000 after Joe approved an additional $10,000 over the initial $140,000.",
+        },
+        {
+          id: "m25",
+          text: "25. Which process group involves delivering the final product of the project?",
+          type: "multiple-choice",
+          choices: [
+            "Executing",
+            "Monitoring and Controlling",
+            "Closing",
+            "Planning",
+          ],
+          correctAnswer: 2, // 'Closing'
+          explanation:
+            'Page 114 describes closing as involving "delivering the final product, service, or result of the project," alongside stakeholder acceptance.',
+        },
+        {
+          id: "m26",
+          text: "26. What did the JWD team use to measure the project's benefits post-completion?",
+          type: "multiple-choice",
+          choices: [
+            "User login statistics",
+            "Cost savings and revenue increases",
+            "Number of templates downloaded",
+            "Employee satisfaction surveys",
+          ],
+          correctAnswer: 1, // 'Cost savings and revenue increases'
+          explanation:
+            "Page 120 details how benefits were measured by savings (e.g., $70,000 from staffing) and revenue increases ($180,000 from contracts).",
+        },
+        {
+          id: "m27",
+          text: "27. Why do organizations tailor project management methodologies?",
+          type: "multiple-choice",
+          choices: [
+            "To reduce project costs",
+            "To meet their specific needs",
+            "To comply with legal standards",
+            "To simplify documentation",
+          ],
+          correctAnswer: 1, // 'To meet their specific needs'
+          explanation:
+            'Page 86 explains that organizations develop methodologies "to tailor their project management skills to the organization\'s particular needs."',
+        },
+        {
+          id: "m28",
+          text: "28. What was a key output of the initiating process group in the JWD case?",
+          type: "multiple-choice",
+          choices: [
+            "Project schedule",
+            "Project charter",
+            "Status reports",
+            "Lessons-learned report",
+          ],
+          correctAnswer: 1, // 'Project charter'
+          explanation:
+            "Page 89 lists the project charter as a key output of initiation, officially recognizing the project's start.",
+        },
+        {
+          id: "m29",
+          text: "29. Which process group did the JWD team spend significant time on to ensure realistic plans?",
+          type: "multiple-choice",
+          choices: [
+            "Initiating",
+            "Planning",
+            "Executing",
+            "Monitoring and Controlling",
+          ],
+          correctAnswer: 1, // 'Planning'
+          explanation:
+            "Page 104 highlights the team's effort in planning (e.g., WBS, schedule) to guide execution, reflecting its importance.",
+        },
+        {
+          id: "m30",
+          text: "30. What was one challenge faced during the executing phase of the JWD project?",
+          type: "multiple-choice",
+          choices: [
+            "Lack of stakeholder buy-in",
+            "Poor response to the survey",
+            "Inaccurate cost estimates",
+            "Delayed project charter approval",
+          ],
+          correctAnswer: 1, // 'Poor response to the survey'
+          explanation:
+            "Page 108's milestone report notes a poor survey response as an issue during execution, requiring intervention from Joe.",
+        },
+      ];
+
       const quizDiv = document.getElementById("quiz");
       const progressBar = document.getElementById("progress");
       const questionCountSpan = document.getElementById("questionCount");
       const scoreDisplaySpan = document.getElementById("scoreDisplay");
       const completedMessage = document.getElementById("completedMessage");
       const finalScoreP = document.getElementById("finalScore");
+      const prelimBtn = document.getElementById("prelimBtn");
+      const midtermBtn = document.getElementById("midtermBtn");
 
       let answeredQuestions = 0;
       let correctAnswers = 0;
+      let currentQuestions = prelimQuestions;
 
       // Set current year in footer
       document.getElementById("currentYear").textContent =
         new Date().getFullYear();
 
-      questions.forEach((question, index) => {
-        const questionDiv = document.createElement("div");
-        questionDiv.className = "question";
-        questionDiv.id = question.id;
+      // Function to load quiz questions based on category
+      function loadQuestions(questions) {
+        // Clear current quiz display and reset counters
+        quizDiv.innerHTML = "";
+        answeredQuestions = 0;
+        correctAnswers = 0;
+        currentQuestions = questions;
 
-        const p = document.createElement("p");
-        const questionNumber = document.createElement("span");
-        questionNumber.className = "question-number";
-        questionNumber.textContent = index + 1;
+        // Generate question elements
+        questions.forEach((question, index) => {
+          const questionDiv = document.createElement("div");
+          questionDiv.className = "question";
+          questionDiv.id = question.id;
 
-        p.appendChild(questionNumber);
-        p.appendChild(
-          document.createTextNode(
-            " " + question.text.substring(question.text.indexOf(".") + 2)
-          )
-        );
-        questionDiv.appendChild(p);
+          const p = document.createElement("p");
+          const questionNumber = document.createElement("span");
+          questionNumber.className = "question-number";
+          questionNumber.textContent = index + 1;
 
-        const optionsContainer = document.createElement("div");
-        optionsContainer.className = "options-container";
+          p.appendChild(questionNumber);
+          p.appendChild(
+            document.createTextNode(
+              " " + question.text.substring(question.text.indexOf(".") + 2)
+            )
+          );
+          questionDiv.appendChild(p);
 
-        if (question.type === "multiple-choice") {
-          question.choices.forEach((choice, index) => {
-            const label = document.createElement("label");
-            const radio = document.createElement("input");
-            radio.type = "radio";
-            radio.name = question.id;
-            radio.value = index;
-            label.appendChild(radio);
-            label.appendChild(document.createTextNode(choice));
-            optionsContainer.appendChild(label);
-          });
+          const optionsContainer = document.createElement("div");
+          optionsContainer.className = "options-container";
 
-          questionDiv.appendChild(optionsContainer);
+          if (question.type === "multiple-choice") {
+            question.choices.forEach((choice, index) => {
+              const label = document.createElement("label");
+              const radio = document.createElement("input");
+              radio.type = "radio";
+              radio.name = question.id;
+              radio.value = index;
+              label.appendChild(radio);
+              label.appendChild(document.createTextNode(choice));
+              optionsContainer.appendChild(label);
+            });
 
-          const buttonContainer = document.createElement("div");
-          buttonContainer.className = "button-container";
+            questionDiv.appendChild(optionsContainer);
 
-          const button = document.createElement("button");
-          button.textContent = "Check Answer";
-          button.onclick = () =>
-            checkAnswer(
-              question.id,
-              question.correctAnswer,
-              question.explanation,
-              question.choices
-            );
+            const buttonContainer = document.createElement("div");
+            buttonContainer.className = "button-container";
 
-          buttonContainer.appendChild(button);
-          questionDiv.appendChild(buttonContainer);
-        } else {
-          questionDiv.appendChild(optionsContainer);
+            const button = document.createElement("button");
+            button.textContent = "Check Answer";
+            button.onclick = () =>
+              checkAnswer(
+                question.id,
+                question.correctAnswer,
+                question.explanation,
+                question.choices
+              );
 
-          const buttonContainer = document.createElement("div");
-          buttonContainer.className = "button-container";
+            buttonContainer.appendChild(button);
+            questionDiv.appendChild(buttonContainer);
+          } else {
+            questionDiv.appendChild(optionsContainer);
 
-          const button = document.createElement("button");
-          button.textContent = "Show Sample Answer";
-          button.onclick = () =>
-            showSampleAnswer(question.id, question.sampleAnswer);
+            const buttonContainer = document.createElement("div");
+            buttonContainer.className = "button-container";
 
-          buttonContainer.appendChild(button);
-          questionDiv.appendChild(buttonContainer);
+            const button = document.createElement("button");
+            button.textContent = "Show Sample Answer";
+            button.onclick = () =>
+              showSampleAnswer(question.id, question.sampleAnswer);
+
+            buttonContainer.appendChild(button);
+            questionDiv.appendChild(buttonContainer);
+          }
+
+          const answerDiv = document.createElement("div");
+          answerDiv.className = "answer";
+          questionDiv.appendChild(answerDiv);
+
+          quizDiv.appendChild(questionDiv);
+        });
+
+        // Update progress display
+        updateProgress();
+
+        // Hide completed message when switching categories
+        completedMessage.style.display = "none";
+      }
+
+      // Toggle between Prelim and Midterm categories
+      prelimBtn.addEventListener("click", function () {
+        if (!this.classList.contains("active")) {
+          prelimBtn.classList.add("active");
+          midtermBtn.classList.remove("active");
+          loadQuestions(prelimQuestions);
         }
+      });
 
-        const answerDiv = document.createElement("div");
-        answerDiv.className = "answer";
-        questionDiv.appendChild(answerDiv);
-
-        quizDiv.appendChild(questionDiv);
+      midtermBtn.addEventListener("click", function () {
+        if (!this.classList.contains("active")) {
+          midtermBtn.classList.add("active");
+          prelimBtn.classList.remove("active");
+          loadQuestions(midtermQuestions);
+        }
       });
 
       function checkAnswer(questionId, correctIndex, explanation, choices) {
@@ -925,7 +1403,7 @@
       }
 
       function updateProgress() {
-        const totalQuestions = questions.length;
+        const totalQuestions = currentQuestions.length;
         const progress = (answeredQuestions / totalQuestions) * 100;
 
         progressBar.style.width = `${progress}%`;
@@ -953,8 +1431,8 @@
           : "🌙";
       });
 
-      // Initialize progress
-      updateProgress();
+      // Initialize with prelim questions
+      loadQuestions(prelimQuestions);
     </script>
   </body>
 </html>
